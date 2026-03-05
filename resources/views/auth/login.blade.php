@@ -1,5 +1,5 @@
 @extends('users::layouts.auth')
-@section('title', 'Masuk ke Akun')
+@section('title', 'Login')
 @section('content')
 <div class="card">
   <div class="card-header">
