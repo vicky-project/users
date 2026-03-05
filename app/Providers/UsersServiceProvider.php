@@ -5,6 +5,7 @@ namespace Modules\Users\Providers;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
+use Nwidart\Modules\Facades\Module;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Modules\Users\Services\SocialProviderManager;
