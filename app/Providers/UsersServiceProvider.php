@@ -35,6 +35,13 @@ class UsersServiceProvider extends ServiceProvider
       $this->registerMenuAdmin();
     }
 
+    if (
+      config($this->nameLower . ".hooks.enabled", false) &&
+      class_exists($class = config($this->nameLower . ".hooks.service"))
+    ) {
+      $this->registerHooks($class);
+    }
+
     // Register middleware
     $this->app["router"]->aliasMiddleware(
       "permission",
@@ -75,6 +82,12 @@ class UsersServiceProvider extends ServiceProvider
     ->set("auth.providers.users.model",
       "Modules\\User\\Models\\User");
     $this->app->singleton(SocialProviderManager::class);
+  }
+
+  protected function registerHooks($hookService): void
+  {
+    $hookService::registerHook('main-apps',
+      'users::hooks.apps');
   }
 
   /**

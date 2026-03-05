@@ -1,5 +1,9 @@
 <?php
 
 return [
-    'name' => 'Users',
+  'name' => 'Users',
+  "hooks" => [
+    "enabled" => true,
+    "service" => \Modules\CoreUI\Services\UIService::class,
+  ],
 ];
