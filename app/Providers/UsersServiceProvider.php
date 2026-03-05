@@ -30,7 +30,7 @@ class UsersServiceProvider extends ServiceProvider
 		$this->registerViews();
 		$this->loadMigrationsFrom(module_path($this->name, "database/migrations"));
 
-		if (module_enabled("Admin")) {
+		if (Module::enabled("Admin")) {
 			$this->registerMenuAdmin();
 		}
 
