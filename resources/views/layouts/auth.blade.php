@@ -6,29 +6,22 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title', config('app.name'))</title>
 
-  {{-- Bootstrap CSS --}}
+  <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  {{-- Bootstrap Icons --}}
+  <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  {{-- Google Fonts (opsional) --}}
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
 
-  {{-- Gaya kustom auth --}}
   @include('users::partials.styles-auth')
   @stack('styles')
 </head>
-<body class="d-flex align-items-center py-4 bg-light {{ session('is_telegram_app') ? 'telegram-app' : '' }}">
-
-  {{-- Container dengan tinggi penuh viewport --}}
+<body class="bg-light d-flex align-items-center min-vh-100">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6 col-xl-5">
+      <div class="col-md-6 col-lg-5">
 
-        {{-- Tampilkan error jika ada --}}
         @if ($errors->any())
         <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-4" role="alert">
-          <i class="bi bi-exclamation-triangle-fill me-2"></i>
-          <strong>Oops!</strong> Ada beberapa masalah dengan input Anda.
+          <strong><i class="bi bi-exclamation-triangle-fill me-2"></i>Terjadi kesalahan!</strong>
           <ul class="mt-2 mb-0 ps-3">
             @foreach ($errors->all() as $error)
             <li><small>{{ $error }}</small></li>
@@ -38,16 +31,12 @@
         </div>
         @endif
 
-        {{-- Konten halaman (login, register, dll) --}}
         @yield('content')
       </div>
     </div>
   </div>
 
-  {{-- Bootstrap JS --}}
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-  {{-- Script Telegram --}}
   <script>
     if (window.Telegram?.WebApp) {
       Telegram.WebApp.ready();
