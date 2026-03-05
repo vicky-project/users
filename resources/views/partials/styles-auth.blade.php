@@ -15,7 +15,7 @@
     background-color: rgba(255, 255, 255, 0.9);
     }
     .card-header {
-    background-color: transparent;
+    background: transparent;
     border-bottom: 1px solid rgba(0,0,0,0.05);
     font-weight: 600;
     font-size: 1.75rem;
