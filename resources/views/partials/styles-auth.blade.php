@@ -36,9 +36,31 @@
     font-weight: 500;
     color: #495057;
     }
+    /* Mempercantik tombol toggle password */
+    .input-group .btn-outline-secondary {
+    border-color: #ced4da;
+    background-color: white;
+    }
+
+    .input-group .btn-outline-secondary:hover {
+    background-color: #f8f9fa;
+    color: #0d6efd;
+    }
+
+    /* Ikon dalam input group */
     .input-group-text {
-    background-color: transparent;
+    background-color: white;
+    border-right: none;
     color: #6c757d;
+    }
+
+    .input-group .form-control {
+    border-left: none;
+    }
+
+    .input-group .form-control:focus {
+    box-shadow: none;
+    border-color: #86b7fe;
     }
     .btn-primary {
     background-color: #0d6efd;
