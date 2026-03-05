@@ -11,14 +11,10 @@
         <p>
           This is your user dashboard. Here you can manage your profile, view notifications, and access other features.
         </p>
-        <p>
-          Modules can add widgets here using the <code>@stack('user-widgets')</code> directive.
-        </p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Stack untuk widget dari modul lain -->
-@stack('user-widgets')
+@hook('dashboard-apps')
 @endsection
