@@ -15,13 +15,18 @@
     background-color: rgba(255, 255, 255, 0.9);
     }
     .card-header {
-    background: transparent;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-bottom: 3px solid #0d6efd; /* aksen biru tegas */
     font-weight: 600;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     padding: 1.5rem 1.5rem 0.5rem;
     text-align: center;
-    color: #333;
+    color: #0d6efd; /* warna teks biru */
+    }
+
+    /* Ikon dalam header juga bisa diberi warna senada */
+    .card-header i {
+    color: #0d6efd;
     }
     .card-body {
     padding: 1.5rem 2rem 2rem;
