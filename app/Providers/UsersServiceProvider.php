@@ -10,6 +10,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Modules\Users\Services\SocialProviderManager;
 use Modules\Users\Services\PermissionRegistrar;
+use Modules\Users\Constants\Permission;
 
 class UsersServiceProvider extends ServiceProvider
 {
@@ -226,26 +227,26 @@ class UsersServiceProvider extends ServiceProvider
       $menu->add([
         "title" => "Users Management",
         "icon" => "bi bi-people",
-        "permission",
+        "permission" => Permission::VIEW_USERS,
         "order" => 10,
         "children" => [
           [
             "title" => "Users",
             "icon" => "bi bi-person",
             "route" => "admin.users.index",
-            "permission",
+            "permission" => Permission::VIEW_USERS,
           ],
           [
             "title" => "Roles",
             "icon" => "bi bi-shield",
             "route" => "admin.roles.index",
-            "permission",
+            "permission" => Permission::VIEW_ROLES,
           ],
           [
             "title" => "Permissions",
             "icon" => "bi bi-key",
             "route" => "admin.permissions.index",
-            "permission",
+            "permission" => Permission::VIEW_PERMISSIONS,
           ],
         ],
       ]);
