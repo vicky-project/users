@@ -88,6 +88,8 @@ class UsersServiceProvider extends ServiceProvider
   {
     $hookService::registerHook('main-apps',
       'users::hooks.apps');
+    $hookService::registerHook('navbar',
+      'users::hooks.navbar');
   }
 
   /**
