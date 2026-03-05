@@ -80,7 +80,7 @@ class UsersServiceProvider extends ServiceProvider
     $this->app
     ->make("config")
     ->set("auth.providers.users.model",
-      "Modules\\User\\Models\\User");
+      "Modules\\Users\\Models\\User");
     $this->app->singleton(SocialProviderManager::class);
   }
 
