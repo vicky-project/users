@@ -10,15 +10,18 @@
     .card {
     border: none;
     border-radius: 1rem;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.9);
     }
     .card-header {
     background-color: transparent;
     border-bottom: 1px solid rgba(0,0,0,0.05);
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     padding: 1.5rem 1.5rem 0.5rem;
     text-align: center;
+    color: #333;
     }
     .card-body {
     padding: 1.5rem 2rem 2rem;
