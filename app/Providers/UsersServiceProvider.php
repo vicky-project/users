@@ -97,7 +97,7 @@ class UsersServiceProvider extends ServiceProvider
   */
   protected function registerCommands(): void
   {
-    //$this->commands([\Modules\Users\Console\ModuleInstall::class]);
+    $this->commands([\Modules\Users\Console\CreateUserCommand::class]);
   }
 
   /**
