@@ -28,6 +28,9 @@
           @if (Route::has('password.request'))
           <a class="btn btn-link" href="{{ route('password.request') }}">Forgot Your Password?</a>
           @endif
+          @if(Route::has('register'))
+          <a class="btn btn-link" href="{{ route('register') }}">Create account</a>
+          @endif
         </form>
       </div>
     </div>
