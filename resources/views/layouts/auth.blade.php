@@ -23,7 +23,7 @@
     </div>
     @endif
   </div>
-  <div class="col-md-6 col-lg-5">
+  <div class="col-md-6">
     @yield('content')
   </div>
 
