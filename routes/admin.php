@@ -17,16 +17,16 @@ Route::group(
     Route::get("users/{user}/assign-roles", [
       UserController::class,
       "assignRoles",
-    ])->name("assign-roles");
+    ])->name("users.assign-roles");
     Route::post("users/{user}/assign-roles", [
       UserController::class,
       "updateRoles",
-    ])->name("assign-roles.update");
+    ])->name("users.assign-roles.update");
     Route::resource("users", UserController::class);
 
     // Roles
-    Route::get('roles/{role}/assign-permissions', [RoleController::class, 'assignPermissions'])->name('assign-permissions');
-    Route::post('roles/{role}/assign-permissions', [RoleController::class, 'updatePermissions'])->name('assign-permissions.update');
+    Route::get('roles/{role}/assign-permissions', [RoleController::class, 'assignPermissions'])->name('roles.assign-permissions');
+    Route::post('roles/{role}/assign-permissions', [RoleController::class, 'updatePermissions'])->name('roles.assign-permissions.update');
     Route::resource("roles", RoleController::class);
 
     // Permissions
