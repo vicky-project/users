@@ -77,4 +77,18 @@ class User extends Authenticatable
     ->latest()
     ->first();
   }
+
+  public function getAvatarAttribute() {
+    if ($this->socialAccounts) {
+      foreach ($this->socialAccounts as $account) {
+        $providerData = $account->provider_data ?? [];
+        if (!empty($providerData['avatar'])) {
+          return $providerData['avatar'];
+        }
+      }
+    }
+
+    $hash = md5(strtolower(trim($this->email)));
+    return "https://www.gravatar.com/avatar/{$hash}?s=200&d=mp";
+  }
 }

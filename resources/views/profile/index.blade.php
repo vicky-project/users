@@ -10,7 +10,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-3 text-center mb-3">
-            <img src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($user->email))) }}?s=200&d=mp"
+            <img src="{{ $user->avatar }}"
             class="rounded-circle img-fluid border shadow-sm"
             alt="Avatar"
             style="max-width: 150px;">
