@@ -8,22 +8,6 @@
         <i class="bi bi-person-circle"></i> My Profile
       </div>
       <div class="card-body">
-        @if(session('success'))
-        <div class="alert alert-success">
-          {{ session('success') }}
-        </div>
-        @endif
-        @if ($errors->any())
-        <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-4" role="alert">
-          <strong><i class="bi bi-exclamation-triangle-fill me-2"></i>Terjadi kesalahan!</strong>
-          <ul class="mt-2 mb-0 ps-3">
-            @foreach ($errors->all() as $error)
-            <li><small>{{ $error }}</small></li>
-            @endforeach
-          </ul>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
         <div class="row">
           <div class="col-md-3 text-center mb-3">
             <img src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($user->email))) }}?s=200&d=mp"
