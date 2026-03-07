@@ -30,7 +30,7 @@ class UsersController extends Controller
   /**
   * Show the specified resource.
   */
-  public function show($id) {
+  public function show() {
     return view('users::show');
   }
 
