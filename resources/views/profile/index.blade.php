@@ -42,6 +42,13 @@
         </div>
       </div>
     </div>
+    @if(Module::isEnabled('SocialAccount'))
+    @include('socialaccount::profile.index', [
+    'connectedAccounts' => auth()->user()->socialAccounts,
+    'providers' => app(\Modules\SocialAccount\Services\SocialProviderManager::class)->getProviders()
+    ])
+    @endif
   </div>
 </div>
+
 @endsection

@@ -70,8 +70,32 @@
         @endif
       </div>
     </form>
+
+    @php
+    $socialProviders = [];
+    if (Module::isEnabled('SocialAccount') && class_exists(\Modules\SocialAccount\Services\SocialProviderManager::class)) {
+    $manager = app(\Modules\SocialAccount\Services\SocialProviderManager::class);
+    $socialProviders = $manager->getProviders();
+    }
+    @endphp
+
+    @if(!empty($socialProviders))
+    <div class="social-login mt-4">
+      <div class="text-center mb-3">
+        Atau masuk dengan
+      </div>
+      <div class="d-flex flex-column gap-2">
+        @foreach($socialProviders as $provider)
+        <a href="{{ $provider->getLoginUrl() }}" class="btn btn-outline-secondary social-btn">
+          <i class="{{ $provider->getIcon() }}"></i> {{ $provider->getLabel() }}
+        </a>
+        @endforeach
+      </div>
+    </div>
+    @endif
   </div>
 </div>
+@endsection
 
 @push('scripts')
 <script>
@@ -93,4 +117,3 @@
   });
 </script>
 @endpush
-@endsection
