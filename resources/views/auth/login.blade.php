@@ -73,7 +73,7 @@
 
     @php
     $socialProviders = [];
-    if (Module::collections()->has('SocialAccount') && Module::isEnabled('SocialAccount') && class_exists(\Modules\SocialAccount\Services\SocialProviderManager::class)) {
+    if (Module::isEnabled('SocialAccount') && class_exists(\Modules\SocialAccount\Services\SocialProviderManager::class)) {
     $manager = app(\Modules\SocialAccount\Services\SocialProviderManager::class);
     $socialProviders = $manager->getProviders();
     }
