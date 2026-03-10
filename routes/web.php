@@ -40,14 +40,24 @@ Route::middleware(['web', 'guest'])->group(function() {
   ])->name("password.update");
 });
 
-
-
 Route::group(['middleware' => 'web', 'auth'], function() {
   // logout
   Route::post("logout", [LoginController::class, "logout"])->name("logout");
 
-  Route::get('/dashboard', [UsersController::class, 'index'])->name('dashboard');
   Route::get('/profile', [UsersController::class, 'profile'])->name('profile');
   Route::get('/profile/edit', [UsersController::class, 'edit'])->name('profile.edit');
   Route::put('/profile', [UsersController::class, 'update'])->name('profile.update');
+
+  $middleware = ['web', 'auth'];
+  if (Module::has("Telegram") && Module::isEnabled("Telegram") && class_exists(\Modules\Telegram\Http\Middleware\TelegramMiniApp::class)) {
+    $middleware[] = "telegram.miniapp";
+  }
+
+  Route::group([
+    "prefix" => "apps",
+    "middleware" => $middleware,
+    "as" => "apps."
+  ], function() {
+    Route::get('/dashboard', [UsersController::class, 'index'])->name('index');
+  });
 });
