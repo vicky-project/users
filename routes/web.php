@@ -48,9 +48,11 @@ Route::group(['middleware' => 'web', 'auth'], function() {
   Route::get('/profile/edit', [UsersController::class, 'edit'])->name('profile.edit');
   Route::put('/profile', [UsersController::class, 'update'])->name('profile.update');
 
-  $middleware = ['web', 'auth'];
+  $middleware = ['web'];
   if (Module::has("Telegram") && Module::isEnabled("Telegram") && class_exists(\Modules\Telegram\Http\Middleware\TelegramMiniApp::class)) {
     $middleware[] = "telegram.miniapp";
+  } else {
+    $middleware[] = "auth";
   }
 
   Route::group([
