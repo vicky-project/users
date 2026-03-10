@@ -11,7 +11,6 @@ class UsersController extends Controller
   * Display a listing of the resource.
   */
   public function index() {
-    dd(\Auth::user());
     return view('users::index');
   }
 
