@@ -1,5 +1,5 @@
 <div class="col-4 col-md-2 mb-2">
-  <a href="{{ route('dashboard') }}" class="menu-item rounded-4 p-2" id="dashboard">
+  <a href="{{ route('apps.index') }}" class="menu-item rounded-4 p-2" id="dashboard">
     <i class="bi bi-app"></i>
     <span>Application</span>
   </a>
