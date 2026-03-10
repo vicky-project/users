@@ -40,7 +40,7 @@ Route::middleware(['web', 'guest'])->group(function() {
   ])->name("password.update");
 });
 
-Route::group(['middleware' => 'web', 'auth'], function() {
+Route::group(['middleware' => ['web', 'auth']], function() {
   // logout
   Route::post("logout", [LoginController::class, "logout"])->name("logout");
 
