@@ -54,6 +54,8 @@ Route::group(['middleware' => ['web', 'auth']], function() {
 $middleware = ['web'];
 if (Module::has("Telegram") && Module::isEnabled("Telegram") && class_exists(\Modules\Telegram\Http\Middleware\TelegramOrWebAuth::class)) {
   $middleware[] = "telegram.or.web";
+} else {
+  $middleware[] = 'auth';
 }
 
 Route::group([
