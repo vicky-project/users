@@ -5,7 +5,7 @@ use Modules\Users\Http\Controllers\Auth\ForgotPasswordController;
 use Modules\Users\Http\Controllers\Auth\LoginController;
 use Modules\Users\Http\Controllers\Auth\RegisterController;
 use Modules\Users\Http\Controllers\Auth\ResetPasswordController;
-use Modules\Users\Http\Controllers\MiniApp\AppsController;
+use Modules\Users\Http\Controllers\AppsController;
 use Modules\Users\Http\Controllers\UsersController;
 
 // Authentication
@@ -49,22 +49,14 @@ Route::group(['middleware' => ['web', 'auth']], function() {
   Route::get('/profile/edit', [UsersController::class, 'edit'])->name('profile.edit');
   Route::put('/profile', [UsersController::class, 'update'])->name('profile.update');
 
+  $middleware = ['web'];
+  if (Module::has("Telegram") && Module::isEnabled("Telegram") && class_exists(\Modules\Telegram\Http\Middleware\TelegramMiniApp::class)) {
+    $middleware[] = "telegram.or.web";
+  }
 
   Route::group([
     "prefix" => "apps",
     "as" => "apps."
-  ], function() {
-    Route::get('/dashboard', [UsersController::class, 'index'])->name('index');
-  });
-
-  $middleware = ['web'];
-  if (Module::has("Telegram") && Module::isEnabled("Telegram") && class_exists(\Modules\Telegram\Http\Middleware\TelegramMiniApp::class)) {
-    $middleware[] = "telegram.miniapp";
-  }
-
-  Route::group([
-    "prefix" => "telegram",
-    "as" => "telegram."
     "middleware" => $middleware
   ], function() {
     Route::get('/dashboard', [AppsController::class, 'index'])->name('index');

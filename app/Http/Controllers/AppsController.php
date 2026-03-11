@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Users\Http\Controllers\MiniApp;
+namespace Modules\Users\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ class AppsController extends Controller
   * Display a listing of the resource.
   */
   public function index() {
-    return view('users::mini-apps.index');
+    return view('users::index');
   }
 
   /**
