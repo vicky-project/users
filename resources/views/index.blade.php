@@ -1,4 +1,4 @@
-@extends('coreui::layouts.mini-app')
+@extends('coreui::layouts.app')
 @section('title', 'Dashboard')
 @section('content')
 <div class="row">
