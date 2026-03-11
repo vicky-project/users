@@ -48,110 +48,121 @@
 
 <div class="row">
   <div class="col-12">
-    <div class="d-flex justify-content-between align-items-center">
-      @if($isTrusted)
-      <span>
-        <i class="bi bi-shield-check text-success me-1 fs-2"></i>
-        Perangkat terverifikasi.
-      </span>
-      <button type="button" class="btn btn-danger" onclick="trustToggle();">
-        <i class="bi bi-x-lg me-1"></i>
-        Batalkan
-      </button>
-      @else
-      <span>
-        <i class="bi bi-shield-exclamation text-danger me-1 fs-2"></i>
-        Perangkat tidak terverifikasi.
-      </span>
-      <button type="button" class="btn btn-success" onclick="trustToggle();">
-        <i class="bi bi-check2-all me-1"></i>
-        Verifikasi
-      </button>
-      @endif
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          @if($isTrusted)
+          <span>
+            <i class="bi bi-shield-check text-success me-1 fs-2"></i>
+            Perangkat terverifikasi.
+          </span>
+          <button type="button" class="btn btn-danger" onclick="trustToggle();">
+            <i class="bi bi-x-lg me-1"></i>
+            Batalkan
+          </button>
+          @else
+          <span>
+            <i class="bi bi-shield-exclamation text-danger me-1 fs-2"></i>
+            Perangkat tidak terverifikasi.
+          </span>
+          <button type="button" class="btn btn-success" onclick="trustToggle();">
+            <i class="bi bi-check2-all me-1"></i>
+            Verifikasi
+          </button>
+          @endif
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Ringkasan Statistik -->
+
 <div class="row mb-4 pt-2 mt-3 border-top border-primary">
   <div class="col-md-12">
-    <div class="summary-box">
-      <h6 class="fw-bold text-primary mb-2">
-        <i class="bi bi-bar-chart me-2"></i>Ringkasan Aktivitas Login
-      </h6>
-      <div class="row">
-        <!-- Total Logins -->
-        <div class="col-md-4">
-          <div class="d-flex align-items-center mb-3">
-            <div class="stat-icon primary-bg me-3">
-              <i class="bi bi-door-open"></i>
+    <div class="card">
+      <div class="card-body">
+        <div class="summary-box">
+          <h6 class="fw-bold text-primary mb-2">
+            <i class="bi bi-bar-chart me-2"></i>Ringkasan Aktivitas Login
+          </h6>
+          <div class="row">
+            <!-- Total Logins -->
+            <div class="col-md-4">
+              <div class="d-flex align-items-center mb-3">
+                <div class="stat-icon primary-bg me-3">
+                  <i class="bi bi-door-open"></i>
+                </div>
+                <div>
+                  <div class="stat-value text-primary">
+                    {{ $user->getTotalLogins() }}
+                  </div>
+                  <div class="stat-label">
+                    Total Login
+                  </div>
+                  <span class="badge-stat bg-primary bg-opacity-10 text-primary">Seluruh waktu</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <div class="stat-value text-primary">
-                {{ $user->getTotalLogins() }}
+
+            <!-- Failed Attempts -->
+            <div class="col-md-4">
+              <div class="d-flex align-items-center mb-3">
+                <div class="stat-icon danger-bg me-3">
+                  <i class="bi bi-exclamation-triangle"></i>
+                </div>
+                <div>
+                  <div class="stat-value text-danger">
+                    {{ $user->getFailedAttempts() }}
+                  </div>
+                  <div class="stat-label">
+                    Upaya Gagal
+                  </div>
+                  @if($user->getFailedAttempts() > 0)
+                  <span class="badge-stat bg-danger bg-opacity-10 text-danger">Perlu diperhatikan</span>
+                  @else
+                  <span class="badge-stat bg-success bg-opacity-10 text-success">Aman</span>
+                  @endif
+                </div>
               </div>
-              <div class="stat-label">
-                Total Login
+            </div>
+
+            <!-- Unique Devices -->
+            <div class="col-md-4">
+              <div class="d-flex align-items-center mb-3">
+                <div class="stat-icon info-bg me-3">
+                  <i class="bi bi-phone"></i>
+                </div>
+                <div>
+                  <div class="stat-value text-info">
+                    {{ $user->getUniqueDevicesCount() }}
+                  </div>
+                  <div class="stat-label">
+                    Perangkat Unik
+                  </div>
+                  <span class="badge-stat bg-info bg-opacity-10 text-info">Aktif</span>
+                </div>
               </div>
-              <span class="badge-stat bg-primary bg-opacity-10 text-primary">Seluruh waktu</span>
             </div>
           </div>
-        </div>
 
-        <!-- Failed Attempts -->
-        <div class="col-md-4">
-          <div class="d-flex align-items-center mb-3">
-            <div class="stat-icon danger-bg me-3">
-              <i class="bi bi-exclamation-triangle"></i>
-            </div>
-            <div>
-              <div class="stat-value text-danger">
-                {{ $user->getFailedAttempts() }}
-              </div>
-              <div class="stat-label">
-                Upaya Gagal
-              </div>
-              @if($user->getFailedAttempts() > 0)
-              <span class="badge-stat bg-danger bg-opacity-10 text-danger">Perlu diperhatikan</span>
-              @else
-              <span class="badge-stat bg-success bg-opacity-10 text-success">Aman</span>
-              @endif
-            </div>
-          </div>
-        </div>
-
-        <!-- Unique Devices -->
-        <div class="col-md-4">
-          <div class="d-flex align-items-center mb-3">
-            <div class="stat-icon info-bg me-3">
-              <i class="bi bi-phone"></i>
-            </div>
-            <div>
-              <div class="stat-value text-info">
-                {{ $user->getUniqueDevicesCount() }}
-              </div>
-              <div class="stat-label">
-                Perangkat Unik
-              </div>
-              <span class="badge-stat bg-info bg-opacity-10 text-info">Aktif</span>
-            </div>
+          <!-- Tombol ke Halaman Detail -->
+          <div class="mt-3 text-center">
+            <a href="{{ route('authlog.statistics', $user) }}" class="btn btn-outline-primary">
+              <i class="bi bi-eye me-2"></i> Lihat Detail Lengkap & Kelola Sesi
+            </a>
           </div>
         </div>
       </div>
-
-      <!-- Tombol ke Halaman Detail -->
-      <div class="mt-3 text-center">
-        <a href="{{ route('authlog.statistics', $user) }}" class="btn btn-outline-primary">
-          <i class="bi bi-eye me-2"></i> Lihat Detail Lengkap & Kelola Sesi
-        </a>
+      <div class="card-footer">
+        <div class="last-updated mb-3">
+          <i class="bi bi-clock me-1"></i> Data diperbarui secara real-time dari sistem log management
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="last-updated mb-3">
-  <i class="bi bi-clock me-1"></i> Data diperbarui secara real-time dari sistem log management
-</div>
 @endsection
 
 @push('scripts')
