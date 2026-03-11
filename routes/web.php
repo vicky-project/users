@@ -49,16 +49,17 @@ Route::group(['middleware' => ['web', 'auth']], function() {
   Route::get('/profile/edit', [UsersController::class, 'edit'])->name('profile.edit');
   Route::put('/profile', [UsersController::class, 'update'])->name('profile.update');
 
-  $middleware = ['web'];
-  if (Module::has("Telegram") && Module::isEnabled("Telegram") && class_exists(\Modules\Telegram\Http\Middleware\TelegramMiniApp::class)) {
-    $middleware[] = "telegram.or.web";
-  }
+});
 
-  Route::group([
-    "prefix" => "apps",
-    "as" => "apps.",
-    "middleware" => $middleware
-  ], function() {
-    Route::get('/dashboard', [AppsController::class, 'index'])->name('index');
-  });
+$middleware = ['web'];
+if (Module::has("Telegram") && Module::isEnabled("Telegram") && class_exists(\Modules\Telegram\Http\Middleware\TelegramOrWebAuth::class)) {
+  $middleware[] = "telegram.or.web";
+}
+
+Route::group([
+  "prefix" => "apps",
+  "as" => "apps.",
+  "middleware" => $middleware
+], function() {
+  Route::get('/dashboard', [AppsController::class, 'index'])->name('index');
 });
