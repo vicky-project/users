@@ -43,7 +43,9 @@ Route::middleware(['web', 'guest'])->group(function() {
 });
 
 // Auth routes
-Route::group(['middleware' => ['web', 'auth']], function() {
+Route::group([
+  'middleware' => ['web', 'auth']
+], function() {
   // logout
   Route::post("logout", [LoginController::class, "logout"])->name("logout");
 
@@ -52,10 +54,9 @@ Route::group(['middleware' => ['web', 'auth']], function() {
   Route::put('/profile', [UsersController::class, 'update'])->name('profile.update');
 
   Route::controller(AuthLogController::class)
-  ->group([
-    "prefix" => "authlog",
-    "as" => "authlog."
-  ], function() {
+  ->prefix("authlog")
+  ->name("authlog.")
+  ->group(function() {
     Route::get("/{user}/statistics", "statistics",
     )->name("statistics");
     Route::post("trusted-device", "trustedDeviceToggle",

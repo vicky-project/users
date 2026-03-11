@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Users\Http\Controllers\Users\AuthLogController;
 
-Route::middleware(["auth", "web"])
+Route::middleware(["web", "auth"])
 ->prefix("authlog")
 ->name("authlog.")
 ->group(function () {
