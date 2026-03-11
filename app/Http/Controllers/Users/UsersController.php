@@ -1,17 +1,27 @@
 <?php
 
-namespace Modules\Users\Http\Controllers;
+namespace Modules\Users\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Facades\Hash;
+use Rappasoft\LaravelAuthenticationLog\Helpers\DeviceFingerprint;
 
 class UsersController extends Controller
 {
   /**
   * Display a listing of the resource.
   */
-  public function index() {
-    return view('users::index');
+  public function index(Request $request) {
+    $device = DeviceFingerprint::generate($request);
+    $user = $request->user();
+    $cacheKey = "device_user_" . $user->id . "_trusted_" . md5($device);
+    $isTrusted = cache()->remember(
+      $cacheKey,
+      now()->addHours(),
+      fn() => $user->isDeviceTrusted($device),
+    );
+    return view('users::index', compact("isTrusted", "user", "device"));
   }
 
   /**
@@ -20,18 +30,6 @@ class UsersController extends Controller
   public function profile() {
     $user = auth()->user();
     return view('users::profile.index', compact('user'));
-  }
-
-  /**
-  * Store a newly created resource in storage.
-  */
-  public function store(Request $request) {}
-
-  /**
-  * Show the specified resource.
-  */
-  public function show() {
-    return view('users::show');
   }
 
   /**

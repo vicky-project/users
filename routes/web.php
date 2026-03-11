@@ -6,7 +6,8 @@ use Modules\Users\Http\Controllers\Auth\LoginController;
 use Modules\Users\Http\Controllers\Auth\RegisterController;
 use Modules\Users\Http\Controllers\Auth\ResetPasswordController;
 use Modules\Users\Http\Controllers\AppsController;
-use Modules\Users\Http\Controllers\UsersController;
+use Modules\Users\Http\Controllers\Users\AuthLogController;
+use Modules\Users\Http\Controllers\Users\UsersController;
 
 // Authentication
 Route::middleware(['web', 'guest'])->group(function() {
@@ -41,6 +42,7 @@ Route::middleware(['web', 'guest'])->group(function() {
   ])->name("password.update");
 });
 
+// Auth routes
 Route::group(['middleware' => ['web', 'auth']], function() {
   // logout
   Route::post("logout", [LoginController::class, "logout"])->name("logout");
@@ -48,6 +50,17 @@ Route::group(['middleware' => ['web', 'auth']], function() {
   Route::get('/profile', [UsersController::class, 'profile'])->name('profile');
   Route::get('/profile/edit', [UsersController::class, 'edit'])->name('profile.edit');
   Route::put('/profile', [UsersController::class, 'update'])->name('profile.update');
+
+  Route::controller(AuthLogController::class)
+  ->group([
+    "prefix" => "authlog",
+    "as" => "authlog."
+  ], function() {
+    Route::get("/{user}/statistics", "statistics",
+    )->name("statistics");
+    Route::post("trusted-device", "trustedDeviceToggle",
+    )->name("trusted-device");
+  });
 
 });
 
