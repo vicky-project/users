@@ -56,7 +56,7 @@ Route::group(['middleware' => ['web', 'auth']], function() {
 
   Route::group([
     "prefix" => "apps",
-    "as" => "apps."
+    "as" => "apps.",
     "middleware" => $middleware
   ], function() {
     Route::get('/dashboard', [AppsController::class, 'index'])->name('index');
