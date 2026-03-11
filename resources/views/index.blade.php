@@ -29,10 +29,14 @@
   const initData = window.Telegram?.WebApp?.initData || @json(request()->get("initData", ""));
   if(!initData) return;
 
+  const token = localStorage.getItem("telegram_token") || '{{ request()->get("token") }}';
+  if(token) return;
+
   const apps = document.querySelectorAll(".app-item");
   apps.forEach(function(app) {
   const urlObj = new URL(app.href, window.location.origin);
   urlObj.searchParams.set("initData", initData);
+  urlObj.searchParams.set("token", token);
   app.href = urlObj.toString();
   });
   });
