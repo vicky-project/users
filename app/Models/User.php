@@ -4,6 +4,7 @@ namespace Modules\Users\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Sanctum\HasApiTokens;
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -12,7 +13,8 @@ use Spatie\Activitylog\Traits\CausesActivity;
 
 class User extends Authenticatable
 {
-  use Notifiable,
+  use HasApiTokens,
+  Notifiable,
   HasRoles,
   SoftDeletes,
   AuthenticationLoggable,
