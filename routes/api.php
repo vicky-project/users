@@ -11,10 +11,10 @@ Route::group([
   Route::post("device/{deviceId}/revoke", [AuthLogController::class, "revokeDevice"]
   )->name("device");
 
-  Route::controller(AuthLogController::class)->group([
-    "prefix" => "sessions",
-    "as" => "sessions."
-  ], function () {
+  Route::controller(AuthLogController::class)
+  ->prefix("sessions")
+  ->name("sessions.")
+  ->group(function () {
     Route::post("/revoke-others", "revokeOtherSessions",
     )->name("revoke-others");
 
