@@ -13,6 +13,13 @@ class UsersController extends Controller
   * Display a listing of the resource.
   */
   public function index(Request $request) {
+    return view('users::index');
+  }
+
+  /**
+  * Show the form for creating a new resource.
+  */
+  public function profile(Request $request) {
     $device = DeviceFingerprint::generate($request);
     $user = $request->user();
     $cacheKey = "device_user_" . $user->id . "_trusted_" . md5($device);
@@ -21,15 +28,10 @@ class UsersController extends Controller
       now()->addHours(),
       fn() => $user->isDeviceTrusted($device),
     );
-    return view('users::index', compact("isTrusted", "user", "device"));
-  }
+    return view('users::profile.index',
+      compact("isTrusted", "user", "device")
 
-  /**
-  * Show the form for creating a new resource.
-  */
-  public function profile() {
-    $user = auth()->user();
-    return view('users::profile.index', compact('user'));
+    );
   }
 
   /**
