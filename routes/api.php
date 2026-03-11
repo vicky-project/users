@@ -3,9 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Users\Http\Controllers\Users\AuthLogController;
 
-Route::group([
+Route::name("authlog.")->group([
   "middleware" => ["auth", "web"],
-  "as" => "authlog.",
   "prefix" => "authlog"
 ], function () {
   Route::post("device/{deviceId}/revoke", [AuthLogController::class, "revokeDevice"]
