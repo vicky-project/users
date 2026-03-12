@@ -67,10 +67,8 @@ Route::group([
 
 $middleware = ['web'];
 if (Module::has("Telegram") && Module::isEnabled("Telegram") && class_exists($telegramMiddleware = \Modules\Telegram\Http\Middleware\TelegramOrWebAuth::class)) {
-  \Log::debug("Using telegram middleware");
   $middleware[] = $telegramMiddleware;
 } else {
-  \Log::debug("Telegram middleware not found.");
   $middleware[] = 'auth';
 }
 
