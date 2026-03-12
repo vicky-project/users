@@ -30,7 +30,7 @@
   if(!initData) return;
 
   const token = localStorage.getItem("telegram_token") || '{{ request()->get("token") }}';
-  if(token) return;
+  if(!token) return;
 
   const apps = document.querySelectorAll(".app-item");
   apps.forEach(function(app) {
