@@ -38,6 +38,7 @@
   urlObj.searchParams.set("token", token);
   urlObj.searchParams.set("initData", initData);
   app.href = urlObj.toString();
+  app.setAttribute("disabled", false);
   });
   });
 </script>
