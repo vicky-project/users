@@ -8,6 +8,7 @@ use Modules\Users\Http\Controllers\Auth\ResetPasswordController;
 use Modules\Users\Http\Controllers\AppsController;
 use Modules\Users\Http\Controllers\Users\AuthLogController;
 use Modules\Users\Http\Controllers\Users\UsersController;
+use Modules\Users\Http\Middleware\SelectAuthGuard;
 
 // Authentication
 Route::middleware(['web', 'guest'])->group(function() {
@@ -65,7 +66,7 @@ Route::group([
 
 });
 
-$middleware = ['web'];
+$middleware = ['web', SelectAuthGuard::class];
 if (Module::has("Telegram") && Module::isEnabled("Telegram") && class_exists($telegramMiddleware = \Modules\Telegram\Http\Middleware\TelegramOrWebAuth::class)) {
   $middleware[] = $telegramMiddleware;
 } else {

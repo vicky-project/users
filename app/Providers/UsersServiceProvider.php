@@ -3,6 +3,7 @@
 namespace Modules\Users\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Schedule;
 use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
 use Nwidart\Modules\Facades\Module;
@@ -106,10 +107,10 @@ class UsersServiceProvider extends ServiceProvider
   */
   protected function registerCommandSchedules(): void
   {
-    // $this->app->booted(function () {
-    //     $schedule = $this->app->make(Schedule::class);
-    //     $schedule->command('inspire')->hourly();
-    // });
+    $this->app->booted(function () {
+      $schedule = $this->app->make(Schedule::class);
+      $schedule->command('sanctum:prune-expired --hours=24')->daily();
+    });
   }
 
   /**
