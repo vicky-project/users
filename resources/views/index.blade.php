@@ -35,8 +35,8 @@
   const apps = document.querySelectorAll(".app-item");
   apps.forEach(function(app) {
   const urlObj = new URL(app.href, window.location.origin);
-  urlObj.searchParams.set("initData", initData);
   urlObj.searchParams.set("token", token);
+  urlObj.searchParams.set("initData", initData);
   app.href = urlObj.toString();
   });
   });
