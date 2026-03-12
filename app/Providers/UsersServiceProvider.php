@@ -107,12 +107,9 @@ class UsersServiceProvider extends ServiceProvider
   */
   protected function registerCommandSchedules(): void
   {
-    //$this->app->booted(function () {
-    //  $schedule = $this->app->make(Schedule::class);
-    //  $schedule->command('sanctum:prune-expired --hours=24')->daily();
-    //});
-    $this->withSchedule(function(Schedule $schedule) {
-      $schedule->command('sanctum:prune-expired --hours=24')->daily();
+    $this->app->booted(function () {
+      //  $schedule = $this->app->make(Schedule::class);
+      Schedule::command('sanctum:prune-expired --hours=24')->daily();
     });
   }
 
