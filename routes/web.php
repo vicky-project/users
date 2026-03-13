@@ -68,7 +68,9 @@ Route::group([
 
 $middleware = ['web', SelectAuthGuard::class];
 if (Module::has("Telegram") && Module::isEnabled("Telegram") && class_exists($telegramMiddleware = \Modules\Telegram\Http\Middleware\TelegramOrWebAuth::class)) {
+  $tokenOrSessionMiddleware = \Modules\Telegram\Middleware\AuthenticateWithTokenOrSession::class;
   $middleware[] = $telegramMiddleware;
+  $middleware[] = $tokenOrSessionMiddleware;
 } else {
   $middleware[] = 'auth';
 }
