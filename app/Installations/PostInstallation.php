@@ -8,7 +8,7 @@ class PostInstallation {
   public function handle(string $moduleName) {
     try {
       Artisan::call("vendor:publish", ["--tag" => "sanctum-migrations"]);
-      Artisan::call("migrate", ["--force" => true]);
+      Artisan::call("migrate");
     } catch(\Exception $e) {
       logger()->error(
         "Failed to run post installation of users module: " .
