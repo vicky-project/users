@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Artisan;
 class PostInstallation {
   public function handle(string $moduleName) {
     try {
-      Artisan::call("vendor:publish", ["--tag" => "sanctum-migrations"]);
       Artisan::call("migrate");
     } catch(\Exception $e) {
       logger()->error(
