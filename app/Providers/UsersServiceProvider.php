@@ -83,6 +83,8 @@ class UsersServiceProvider extends ServiceProvider
     ->make("config")
     ->set("auth.providers.users.model",
       "Modules\\Users\\Models\\User");
+    $this->app->make("config")->set('geoip.service',
+      env('GEOIP_SERVICE'));
     $this->app->singleton(SocialProviderManager::class);
   }
 
