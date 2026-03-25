@@ -168,13 +168,7 @@ class User extends Authenticatable
       ] // biru tua & oranye terang
     ];
 
-    $avatar = (new Avatar())->create($this->name);
-    foreach ($colorPairs as $name => $color) {
-      $avatar->addTheme($name, $color);
-    }
-    $avatar->setTheme(array_keys($colorPairs));
-
     $hash = md5(strtolower(trim($this->email)));
-    return $avatar->toBase64() ?? "https://www.gravatar.com/avatar/{$hash}?s=200&d=mp";
+    return (new Avatar(["themes" => $colorPairs]))->create($this->name)->setTheme(array_keys($colorPairs))->toBase64() ?? "https://www.gravatar.com/avatar/{$hash}?s=200&d=mp";
   }
 }
