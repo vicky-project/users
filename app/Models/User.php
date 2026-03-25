@@ -92,6 +92,6 @@ class User extends Authenticatable
     }
 
     $hash = md5(strtolower(trim($this->email)));
-    return Avatar::create($this->name)->toBase64() ?? "https://www.gravatar.com/avatar/{$hash}?s=200&d=mp";
+    return (new Avatar())->create($this->name)->toBase64() ?? "https://www.gravatar.com/avatar/{$hash}?s=200&d=mp";
   }
 }
