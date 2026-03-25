@@ -4,6 +4,7 @@ namespace Modules\Users\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravolt\Avatar\Avatar;
 use Laravel\Sanctum\HasApiTokens;
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 use Spatie\Permission\Traits\HasRoles;
@@ -91,6 +92,6 @@ class User extends Authenticatable
     }
 
     $hash = md5(strtolower(trim($this->email)));
-    return "https://www.gravatar.com/avatar/{$hash}?s=200&d=mp";
+    return Avatar::create($this->name)->toBase64() ?? "https://www.gravatar.com/avatar/{$hash}?s=200&d=mp";
   }
 }
