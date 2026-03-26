@@ -13,7 +13,7 @@
             <img src="{{ $user->avatar }}"
             class="rounded-circle img-fluid border shadow-sm"
             alt="Avatar"
-            style="max-width: 150px;">
+            style="max-width: 150px;" id="avatar-image">
           </div>
           <div class="col-md-9">
             <table class="table table-borderless">
@@ -163,6 +163,19 @@
   </div>
 </div>
 
+{{-- Modal untuk gambar avatar --}}
+<div class="modal fade" id="avatarModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background-color: var(--tg-theme-secondary-bg-color);">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img src="{{ $user->avatar }}" class="img-fluid rounded" alt="Avatar Full" style="max-height: 80vh; width: auto;">
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @push('scripts')
@@ -214,11 +227,29 @@
       }
     }
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+  const avatarImg = document.getElementById('avatar-image');
+  if (avatarImg) {
+  avatarImg.classList.add('avatar-clickable');
+  avatarImg.addEventListener('click', function() {
+  const modal = new bootstrap.Modal(document.getElementById('avatarModal'));
+  modal.show();
+  });
+  }
+  });
 </script>
 @endpush
 
 @push('styles')
 <style>
+  .avatar-clickable {
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .avatar-clickable:hover {
+    opacity: 0.8;
+  }
   .stat-item {
     padding: 1.25rem 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
