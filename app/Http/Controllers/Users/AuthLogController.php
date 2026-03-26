@@ -134,7 +134,7 @@ class AuthLogController extends Controller {
     }
   }
 
-  public function revokeAll(Request $request) {
+  public function revokeAllSessions(Request $request) {
     try {
       $user = $request->user();
       $user->revokeAllSessions();
