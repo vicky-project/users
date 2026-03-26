@@ -19,6 +19,7 @@ class AuthLogController extends Controller {
     $sessionsCount = $user->getActiveSessionsCount();
     // Get all user devices
     $devices = $user->getDevices();
+    dd($devices);
 
     return view(
       "users::profile.statistics",

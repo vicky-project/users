@@ -436,6 +436,8 @@
 
   // Fungsi untuk mencabut perangkat
   function revokeDevice(deviceId) {
+    if (!deviceId) return;
+
     if (confirm('Apakah Anda yakin ingin mencabut akses perangkat ini? ID:' + deviceId)) {
       fetch(`{{ secure_url(config('app.url')) }}/api/authlog/devices/${deviceId}/revoke`, {
         method: 'POST',
