@@ -81,6 +81,11 @@ class User extends Authenticatable
     ->first();
   }
 
+  public function notifyAuthenticationLogVia(): array
+  {
+    return ['telegram'];
+  }
+
   public function getAvatarAttribute() {
     if ($this->socialAccounts) {
       foreach ($this->socialAccounts as $account) {

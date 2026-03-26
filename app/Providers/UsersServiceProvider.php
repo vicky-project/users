@@ -116,6 +116,7 @@ class UsersServiceProvider extends ServiceProvider
     $this->app->booted(function () {
       //  $schedule = $this->app->make(Schedule::class);
       Schedule::command('sanctum:prune-expired --hours=24')->daily();
+      Schedule::command('authentication-log:purge')->monthly();
     });
   }
 
