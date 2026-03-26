@@ -86,7 +86,7 @@ class UsersServiceProvider extends ServiceProvider
     $this->app
     ->make("config")
     ->set("logging.channels.daily.permission",
-      777);
+      0666);
     $this->app->make("config")->set('geoip.service',
       env('GEOIP_SERVICE'));
     $this->app->singleton(SocialProviderManager::class);
