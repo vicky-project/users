@@ -85,6 +85,10 @@ class UsersServiceProvider extends ServiceProvider
       "Modules\\Users\\Models\\User");
     $this->app
     ->make("config")
+    ->set("authentication-log.notifications",
+      require module_path($this->name, 'config/authentication-log.php'));
+    $this->app
+    ->make("config")
     ->set("logging.channels.daily.permission",
       0777);
     $this->app->make("config")->set('geoip.service',
