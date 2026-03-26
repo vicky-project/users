@@ -265,10 +265,9 @@
                     <div class="d-flex justify-content-between align-items-start">
                       <div class="flex-grow-1">
                         <div class="d-flex align-items-center mb-2">
-                          <i class="bi bi-{{ $device->type === 'mobile' ? 'phone' : 'laptop' }} me-2 fs-4" style="color: var(--tg-theme-button-color);"></i>
+                          <i class="bi bi-laptop me-2 fs-4" style="color: var(--tg-theme-button-color);"></i>
                           <div>
                             <h6 class="mb-0" style="color: var(--tg-theme-text-color);">{{ $device->name }}</h6>
-                            <small style="color: var(--tg-theme-hint-color);">{{ $device->model }}</small>
                           </div>
                         </div>
                         <div class="mb-2">
@@ -283,6 +282,10 @@
                         <span class="badge" style="background-color: #198754;color: white;">
                           <i class="bi bi-shield-check"></i> Terpercaya
                         </span>
+                        @else
+                        <button class="btn btn-sm" style="background-color: var(--tg-theme-button-color);color: var(--tg-theme-button-text-color);" onclick="trustToggle('{{ $device->device_id }}');">
+                          <i class="bi bi-check2-all me-1"></i> Verifikasi
+                        </button>
                         @endif
                         @if($device->is_current)
                         <span class="badge ms-2" style="background-color: var(--tg-theme-button-color);color: var(--tg-theme-button-text-color);">
@@ -457,6 +460,50 @@
       }).catch(error => {
       alert('Terjadi kesalahan: '+ error.message);
       });
+    }
+  }
+
+  async function trustToggle(deviceId) {
+    const showAlertExist = typeof showToast === 'function';
+
+    try {
+      const response = await fetch("{{ secure_url(config('app.url'))}}/authlog/trusted-device", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ device_id: deviceId})
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        if (showAlertExist) {
+          showToast('Success', data.message || 'Operation success', 'success');
+        } else {
+          alert(data.message);
+        }
+
+        // Reload page after 1.5 seconds
+        setTimeout(() => {
+        window.location.reload();
+        }, 1500);
+      } else {
+        if (showAlertExist) {
+          showToast('Error', data.message, 'danger');
+        } else {
+          alert(data.message)
+        }
+      }
+    } catch(error) {
+      console.error(error);
+      if (showAlertExist) {
+        showToast('Error', error.message || 'Failed to do this operation.', 'danger');
+      } else {
+        alert(error.message);
+      }
     }
   }
 </script>
