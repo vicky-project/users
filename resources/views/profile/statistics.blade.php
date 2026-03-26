@@ -256,7 +256,7 @@
               <i class="bi bi-phone me-2" style="color: var(--tg-theme-button-color):"></i>Perangkat Terhubung ({{ count($devices) }})
             </h6>
 
-            @if(count($devices) > 0)
+            @if($devices->count() > 0)
             <div class="row">
               @foreach($devices as $device)
               <div class="col-md-6 mb-3">
@@ -276,8 +276,8 @@
                           <span class="fw-medium" style="color: var(--tg-theme-text-color);">{{ $device->ip_address }}</span>
                         </div>
                         <div class="mb-2">
-                          <small class="d-block" style="color: var(--tg-theme-hint-color);">Terakhir Aktivitas</small>
-                          <span style="color: var(--tg-theme-text-color);">{{ \Carbon\Carbon::parse($device->last_active)->diffForHumans() }}</span>
+                          <small class="d-block" style="color: var(--tg-theme-hint-color);">Terakhir Login</small>
+                          <span style="color: var(--tg-theme-text-color);">{{ \Carbon\Carbon::parse($device->last_login_at)->diffForHumans() }}</span>
                         </div>
                         @if($device->is_trusted)
                         <span class="badge" style="background-color: #198754;color: white;">
@@ -292,7 +292,7 @@
                       </div>
                       <div>
                         @if(!$device->is_current)
-                        <button class="btn btn-sm" style="background-color: transparent; color: #dc3545;border: 1px solid #dc3545;" onclick="revokeDevice('{{ $device->id }}')">
+                        <button class="btn btn-sm" style="background-color: transparent; color: #dc3545;border: 1px solid #dc3545;" onclick="revokeDevice('{{ $device->device_id }}')">
                           <i class="bi bi-trash"></i>
                         </button>
                         @endif
