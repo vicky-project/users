@@ -424,7 +424,7 @@
       .then(data => {
       if (data.success) {
       alert('Semua sesi telah dicabut. Anda akan logout.');
-      window.location.href = '/login';
+      location.reload();
       } else {
       alert('Gagal mencabut sesi: ' + data.message);
       }
