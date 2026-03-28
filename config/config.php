@@ -6,6 +6,9 @@ return [
     "enabled" => true,
     "service" => \Modules\CoreUI\Services\UIService::class,
   ],
+  "notifications" => [
+    "stack" => env("AUTHLOG_NITIFICATIONS", "telegram")
+  ],
   "roles" => [
     "super-admin" => [
       "name" => "Super Admin",

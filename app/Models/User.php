@@ -98,6 +98,8 @@ class User extends Authenticatable
   }
 
   public function notifyAuthenticationLogVia() {
-    return ["telegram"];
+    $stack = config("users.notifications.stack");
+
+    return !is_string($stack) ? ["telegram"] : explode(",", trim($stack));
   }
 }
