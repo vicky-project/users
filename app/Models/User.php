@@ -81,11 +81,6 @@ class User extends Authenticatable
     ->first();
   }
 
-  public function notifyAuthenticationLogVia(): array
-  {
-    return ['telegram'];
-  }
-
   public function getAvatarAttribute() {
     if ($this->socialAccounts) {
       foreach ($this->socialAccounts as $account) {
@@ -100,5 +95,9 @@ class User extends Authenticatable
 
     $hash = md5(strtolower(trim($this->email)));
     return (new Avatar(["themes" => $colorPairs]))->create($this->name)->setTheme(array_keys($colorPairs))->toBase64() ?? "https://www.gravatar.com/avatar/{$hash}?s=200&d=mp";
+  }
+
+  public function notifyAuthenticationLogVia() {
+    return ["telegram"];
   }
 }
