@@ -37,6 +37,9 @@
               @endforeach
             </td>
             <td>
+              <a href="{{ route('admin.users.show', $user) }}" class="btn btn-sm btn-secondary" title="Show">
+                <i class="bi bi-eye"></i>
+              </a>
               <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-warning" title="Edit">
                 <i class="bi bi-pencil"></i>
               </a>
