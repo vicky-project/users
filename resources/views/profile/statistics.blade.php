@@ -295,7 +295,7 @@
                       </div>
                       <div>
                         @if(!$device->is_current)
-                        <button class="btn btn-sm" style="background-color: transparent; color: #dc3545;border: 1px solid #dc3545;" onclick="revokeDevice('{{ $device->id }}')">
+                        <button class="btn btn-sm" style="background-color: transparent; color: #dc3545;border: 1px solid #dc3545;" onclick="revokeDevice('{{ $device->device_id }}')">
                           <i class="bi bi-trash"></i>
                         </button>
                         @endif
@@ -439,28 +439,29 @@
 
   // Fungsi untuk mencabut perangkat
   function revokeDevice(deviceId) {
+    alert(deviceId);
     if (!deviceId) return;
 
-    if (confirm('Apakah Anda yakin ingin mencabut akses perangkat ini? ID:' + deviceId)) {
-      fetch(`{{ secure_url(config('app.url')) }}/api/authlog/devices/${deviceId}/revoke`, {
-        method: 'POST',
-        headers: {
-          'X-CSRF-TOKEN': '{{ csrf_token() }}',
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-      })
-      .then(response => response.json())
-      .then(data => {
-      if (data.success) {
-      location.reload();
-      } else {
-      alert('Gagal mencabut perangkat: ' + data.message);
+    if (!confirm('Apakah Anda yakin ingin mencabut akses perangkat ini? ID:' + deviceId)) return;
+
+    fetch(`{{ secure_url(config('app.url')) }}/api/authlog/devices/${deviceId}/revoke`, {
+      method: 'POST',
+      headers: {
+        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       }
-      }).catch(error => {
-      alert('Terjadi kesalahan: '+ error.message);
-      });
+    })
+    .then(response => response.json())
+    .then(data => {
+    if (data.success) {
+    location.reload();
+    } else {
+    alert('Gagal mencabut perangkat: ' + data.message);
     }
+    }).catch(error => {
+    alert('Terjadi kesalahan: '+ error.message);
+    });
   }
 
   async function trustToggle(deviceId) {
