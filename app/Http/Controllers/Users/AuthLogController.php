@@ -155,9 +155,15 @@ class AuthLogController extends Controller {
     }
   }
 
-  public function revokeDevice(Request $request, $deviceId) {
+  public function revokeDevice(Request $request) {
+    $request->validate([
+      "device_id" => "required|string|exists:" .
+      config("authentication-log.table_name") .
+      ",device_id"
+    ]);
     try {
       $user = $request->user();
+      $deviceId = $request->device_id;
       $authLog = $user
       ->authentications()
       ->where("id", $deviceId)
