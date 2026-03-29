@@ -166,7 +166,7 @@ class AuthLogController extends Controller {
       $deviceId = $request->device_id;
       $authLog = $user
       ->authentications()
-      ->where("id", $deviceId)
+      ->where("device_id", $deviceId)
       ->first();
 
       if ($authLog) {
