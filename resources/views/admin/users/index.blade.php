@@ -37,21 +37,23 @@
               @endforeach
             </td>
             <td>
-              <a href="{{ route('admin.users.show', $user) }}" class="btn btn-sm btn-secondary" title="Show">
-                <i class="bi bi-eye"></i>
-              </a>
-              <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-warning" title="Edit">
-                <i class="bi bi-pencil"></i>
-              </a>
-              <a href="{{ route('admin.users.assign-roles', $user) }}" class="btn btn-sm btn-success" title="Assign Roles">
-                <i class="bi bi-shield"></i>
-              </a>
-              <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="d-inline">
-                @csrf @method('DELETE')
-                <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" title="Delete">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </form>
+              <div class="d-flex justify-content-center align-items-center text-center">
+                <a href="{{ route('admin.users.show', $user) }}" class="btn btn-sm btn-secondary" title="Show">
+                  <i class="bi bi-eye"></i>
+                </a>
+                <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-warning" title="Edit">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <a href="{{ route('admin.users.assign-roles', $user) }}" class="btn btn-sm btn-success" title="Assign Roles">
+                  <i class="bi bi-shield"></i>
+                </a>
+                <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="d-inline">
+                  @csrf @method('DELETE')
+                  <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" title="Delete">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </form>
+              </div>
             </td>
           </tr>
           @endforeach
