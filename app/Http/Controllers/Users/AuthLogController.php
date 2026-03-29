@@ -171,6 +171,7 @@ class AuthLogController extends Controller {
 
       if ($authLog) {
         $authLog->delete();
+        cache()->flush();
 
         return response()->json(["success" => true]);
       }
