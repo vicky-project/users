@@ -169,11 +169,12 @@ class AuthLogController extends Controller {
       if (!$authLog) {
         return response()->json([
           "success" => false,
-          "message" => "Device nit found or already revoked"
+          "message" => "Device not found or already revoked"
         ]);
       }
 
-      $authLog->update(["logout_at" => now()]);
+      $authLog->delete();
+      cache()->flush();
 
       return response()->json([
         "success" => true,
