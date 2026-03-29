@@ -170,7 +170,7 @@ class AuthLogController extends Controller {
       ->first();
 
       if ($authLog) {
-        $authLog->destroy();
+        $authLog->delete();
 
         return response()->json(["success" => true]);
       }
