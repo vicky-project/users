@@ -156,23 +156,28 @@ class AuthLogController extends Controller {
   }
 
   public function revokeDevice(Request $request, $deviceId) {
+    $user = $request->user();
+    abort_if(!$user, 401, "Unauthenticated");
+
     try {
-      $user = $request->user();
       $authLog = $user
       ->authentications()
       ->where("device_id", $deviceId)
+      ->whereNull("logout_at")
       ->first();
 
-      if ($authLog) {
-        $authLog->delete();
-        cache()->flush();
-
-        return response()->json(["success" => true]);
+      if (!$authLog) {
+        return response()->json([
+          "success" => false,
+          "message" => "Device nit found or already revoked"
+        ]);
       }
 
+      $authLog->update(["logout_at" => now()]);
+
       return response()->json([
-        "success" => false,
-        "message" => "Device not found.",
+        "success" => true,
+        "message" => "Device revoke successfuly.",
       ]);
     } catch (\Exception $e) {
       \Log::error("Failed to revoke device with ID: " . $deviceId, [

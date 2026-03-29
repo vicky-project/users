@@ -455,6 +455,7 @@
     .then(response => response.json())
     .then(data => {
     if (data.success) {
+    alert("Perangkat berhasil dicabut");
     location.reload();
     } else {
     alert('Gagal mencabut perangkat: ' + data.message);
