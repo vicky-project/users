@@ -376,7 +376,7 @@
       .then(response => response.json())
       .then(data => {
       if (data.success) {
-      location.reload();
+      window.location.reload();
       } else {
       alert('Gagal mencabut sesi: ' + data.message);
       }
@@ -402,7 +402,7 @@
       .then(data => {
       if (data.success) {
       alert('Semua sesi lain telah dicabut.');
-      location.reload();
+      window.location.reload();
       } else {
       alert('Gagal mencabut sesi: ' + data.message);
       }
@@ -427,7 +427,7 @@
       .then(data => {
       if (data.success) {
       alert('Semua sesi telah dicabut. Anda akan logout.');
-      location.reload();
+      window.location.reload();
       } else {
       alert('Gagal mencabut sesi: ' + data.message);
       }
@@ -439,7 +439,6 @@
 
   // Fungsi untuk mencabut perangkat
   function revokeDevice(deviceId) {
-    alert(deviceId);
     if (!deviceId) return;
 
     if (!confirm('Apakah Anda yakin ingin mencabut akses perangkat ini? ID:' + deviceId)) return;
@@ -456,7 +455,7 @@
     .then(data => {
     if (data.success) {
     alert("Perangkat berhasil dicabut");
-    location.reload();
+    window.location.reload();
     } else {
     alert('Gagal mencabut perangkat: ' + data.message);
     }
