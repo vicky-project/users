@@ -8,7 +8,7 @@ Route::group([
   "prefix" => "authlog",
   "as" => "authlog."
 ], function () {
-  Route::post("devices/revoke", [AuthLogController::class, "revokeDevice"]
+  Route::post("devices/{deviceId}/revoke", [AuthLogController::class, "revokeDevice"]
   )->name("device");
 
   Route::controller(AuthLogController::class)

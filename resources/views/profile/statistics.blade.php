@@ -295,7 +295,7 @@
                       </div>
                       <div>
                         @if(!$device->is_current)
-                        <button class="btn btn-sm" style="background-color: transparent; color: #dc3545;border: 1px solid #dc3545;" onclick="revokeDevice('{{ $device->device_id }}')">
+                        <button class="btn btn-sm" style="background-color: transparent; color: #dc3545;border: 1px solid #dc3545;" onclick="revokeDevice('{{ $device->id }}')">
                           <i class="bi bi-trash"></i>
                         </button>
                         @endif
@@ -442,16 +442,13 @@
     if (!deviceId) return;
 
     if (confirm('Apakah Anda yakin ingin mencabut akses perangkat ini? ID:' + deviceId)) {
-      fetch(`{{ secure_url(config('app.url')) }}/api/authlog/devices/revoke`, {
+      fetch(`{{ secure_url(config('app.url')) }}/api/authlog/devices/${deviceId}/revoke`, {
         method: 'POST',
         headers: {
           'X-CSRF-TOKEN': '{{ csrf_token() }}',
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify({
-        device_id: deviceId
-        })
       })
       .then(response => response.json())
       .then(data => {
