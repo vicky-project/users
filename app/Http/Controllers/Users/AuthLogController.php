@@ -163,17 +163,8 @@ class AuthLogController extends Controller {
       $authLog = $user
       ->authentications()
       ->where("device_id", $deviceId)
-      ->whereNull("logout_at")
-      ->first();
+      ->delete();
 
-      if (!$authLog) {
-        return response()->json([
-          "success" => false,
-          "message" => "Device not found or already revoked"
-        ]);
-      }
-
-      $authLog->delete();
       cache()->flush();
 
       return response()->json([
