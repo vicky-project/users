@@ -10,8 +10,8 @@ use Nwidart\Modules\Facades\Module;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Modules\Users\Services\SocialProviderManager;
+use Modules\Users\Models\User;
 use Modules\Users\Services\PermissionRegistrar;
-use Modules\Users\Constants\Permission;
 
 class UsersServiceProvider extends ServiceProvider
 {
@@ -32,10 +32,6 @@ class UsersServiceProvider extends ServiceProvider
     $this->registerConfig();
     $this->registerViews();
     $this->loadMigrationsFrom(module_path($this->name, "database/migrations"));
-
-    if (Module::collections()->has('Admin') && Module::isEnabled("Admin")) {
-      $this->registerMenuAdmin();
-    }
 
     if (
       config($this->nameLower . ".hooks.enabled", false) &&
@@ -82,7 +78,7 @@ class UsersServiceProvider extends ServiceProvider
     $this->app
     ->make("config")
     ->set("auth.providers.users.model",
-      "Modules\\Users\\Models\\User");
+      User::class);
     $this->app
     ->make("config")
     ->set("authentication-log.notifications",
@@ -228,41 +224,6 @@ class UsersServiceProvider extends ServiceProvider
       config("modules.namespace") . "\\" . $this->name . "\\View\\Components",
       $this->nameLower,
     );
-  }
-
-  protected function registerMenuAdmin(): void
-  {
-    if (
-      class_exists($menuManger = \Modules\CoreUI\Services\MenuManager::class)
-    ) {
-      $menu = app($menuManger);
-      $menu->add([
-        "title" => "Users Management",
-        "icon" => "bi bi-people",
-        "permission" => Permission::VIEW_USERS,
-        "order" => 10,
-        "children" => [
-          [
-            "title" => "Users",
-            "icon" => "bi bi-person",
-            "route" => "admin.users.index",
-            "permission" => Permission::VIEW_USERS,
-          ],
-          [
-            "title" => "Roles",
-            "icon" => "bi bi-shield",
-            "route" => "admin.roles.index",
-            "permission" => Permission::VIEW_ROLES,
-          ],
-          [
-            "title" => "Permissions",
-            "icon" => "bi bi-key",
-            "route" => "admin.permissions.index",
-            "permission" => Permission::VIEW_PERMISSIONS,
-          ],
-        ],
-      ]);
-    }
   }
 
   /**
