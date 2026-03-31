@@ -6,7 +6,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravolt\Avatar\Avatar;
 use Laravel\Sanctum\HasApiTokens;
-use Nwidart\Modules\Facades\Module;
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -102,13 +101,5 @@ class User extends Authenticatable
     $stack = config("users.notifications.stack");
 
     return !is_string($stack) ? ["database"] : explode(",", trim($stack));
-  }
-
-  public function routeNotificationForTelegram() {
-    if (Module::has("SocialAccount") && Module::isEnabled("SocialAccount")) {
-      return $this->socialAccounts()->byProvider(\Modules\SocialAccount\Enums\Provider::TELEGRAM)->first()->telegram_id;
-    }
-
-    return null;
   }
 }
