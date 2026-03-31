@@ -14,6 +14,27 @@ class FailedLogin extends Notification implements ShouldQueue
 {
   use Queueable;
 
+  /**
+  * The number of times the notification may be attempted.
+  *
+  * @var int
+  */
+  public $tries = 5;
+
+  /**
+  * The number of seconds the notification can run before timing out.
+  *
+  * @var int
+  */
+  public $timeout = 120;
+
+  /**
+  * The maximum number of unhandled exceptions to allow before failing.
+  *
+  * @var int
+  */
+  public $maxExceptions = 3;
+
   public AuthenticationLog $authenticationLog;
 
   public function __construct(AuthenticationLog $authenticationLog) {

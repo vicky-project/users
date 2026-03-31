@@ -100,6 +100,6 @@ class User extends Authenticatable
   public function notifyAuthenticationLogVia() {
     $stack = config("users.notifications.stack");
 
-    return !is_string($stack) ? ["telegram"] : explode(",", trim($stack));
+    return !is_string($stack) ? ["database"] : explode(",", trim($stack));
   }
 }
