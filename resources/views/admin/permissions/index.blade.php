@@ -14,38 +14,40 @@
       {{ session('success') }}
     </div>
     @endif
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Guard</th>
-          <th width="150">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach($permissions as $permission)
-        <tr>
-          <td>{{ $permission->id }}</td>
-          <td>{{ $permission->name }}</td>
-          <td>{{ $permission->guard_name }}</td>
-          <td>
-            <div class="btn-group btn-group-sm">
-              <a href="{{ route('admin.permissions.edit', $permission) }}" class="btn btn-sm btn-warning" title="Edit">
-                <i class="bi bi-pencil"></i>
-              </a>
-              <form action="{{ route('admin.permissions.destroy', $permission) }}" method="POST" class="d-inline">
-                @csrf @method('DELETE')
-                <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" title="Delete">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </form>
-            </div>
-          </td>
-        </tr>
-        @endforeach
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Guard</th>
+            <th width="150">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($permissions as $permission)
+          <tr>
+            <td>{{ $permission->id }}</td>
+            <td>{{ $permission->name }}</td>
+            <td>{{ $permission->guard_name }}</td>
+            <td>
+              <div class="btn-group btn-group-sm">
+                <a href="{{ route('admin.permissions.edit', $permission) }}" class="btn btn-sm btn-warning" title="Edit">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <form action="{{ route('admin.permissions.destroy', $permission) }}" method="POST" class="d-inline">
+                  @csrf @method('DELETE')
+                  <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" title="Delete">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
     <div class="d-flex justify-content-center">
       {{ $permissions->links() }}
     </div>
