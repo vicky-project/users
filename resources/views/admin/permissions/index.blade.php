@@ -30,15 +30,17 @@
           <td>{{ $permission->name }}</td>
           <td>{{ $permission->guard_name }}</td>
           <td>
-            <a href="{{ route('admin.permissions.edit', $permission) }}" class="btn btn-sm btn-warning" title="Edit">
-              <i class="bi bi-pencil"></i>
-            </a>
-            <form action="{{ route('admin.permissions.destroy', $permission) }}" method="POST" class="d-inline">
-              @csrf @method('DELETE')
-              <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" title="Delete">
-                <i class="bi bi-trash"></i>
-              </button>
-            </form>
+            <div class="btn-group btn-group-sm">
+              <a href="{{ route('admin.permissions.edit', $permission) }}" class="btn btn-sm btn-warning" title="Edit">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <form action="{{ route('admin.permissions.destroy', $permission) }}" method="POST" class="d-inline">
+                @csrf @method('DELETE')
+                <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" title="Delete">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+            </div>
           </td>
         </tr>
         @endforeach
