@@ -83,7 +83,7 @@ class NewDevice extends Notification implements ShouldQueue
   }
 
   public function toTelegram($notifiable) {
-    $message = "🔔⚠️ Your ". config('app.name') . " account logged in from a new device at: " . $this->authenticationLog->login_at->toDateTimeString();
+    $message = "🔔⚠️ Your ". config('app.name') . " account logged in from a new device at: " . $notifiable->authentications->login_at->toDateTimeString();
 
     return [
       "text" => $message,
