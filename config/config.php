@@ -7,7 +7,7 @@ return [
     "service" => \Modules\CoreUI\Services\UIService::class,
   ],
   "notifications" => [
-    "stack" => env("AUTHLOG_NOTIFICATIONS", "database")
+    "stack" => (string) env("AUTHLOG_NOTIFICATIONS", "database")
   ],
   "roles" => [
     "super-admin" => [
