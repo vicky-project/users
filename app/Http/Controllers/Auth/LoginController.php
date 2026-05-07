@@ -2,7 +2,7 @@
 namespace Modules\Users\Http\Controllers\Auth;
 
 use Illuminate\Http\JsonResponse;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Spatie\Permission\Models\Role;

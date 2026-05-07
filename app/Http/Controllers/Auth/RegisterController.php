@@ -1,7 +1,7 @@
 <?php
 namespace Modules\Users\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Modules\Users\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
