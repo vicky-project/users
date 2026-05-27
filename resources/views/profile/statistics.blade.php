@@ -253,7 +253,12 @@
         <div class="row mb-5">
           <div class="col-12">
             <h6 class="fw-bold mb-3" style="color: var(--tg-theme-text-color);">
-              <i class="bi bi-phone me-2" style="color: var(--tg-theme-button-color):"></i>Perangkat Terhubung ({{ count($devices) }})
+              <i class="bi bi-phone me-2" style="color: var(--tg-theme-button-color):"></i>
+              @if($devices)
+              Perangkat Terhubung ({{ count($devices) }})
+              @else
+              Perangkat terhubung (0)
+              @endif
             </h6>
 
             @if($devices && $devices->count() > 0)
