@@ -153,7 +153,7 @@ trait HasAuthenticationLog
     // Get distinct devices by selecting the most recent entry for each device_id
     $table = (new \Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog())->getTable();
 
-    return $this->authentications()?
+    return $this->authentications()
     ->successful()
     ->select('device_id', 'device_name', 'ip_address', 'user_agent', 'is_trusted', 'login_at')
     ->whereNotNull('device_id')
@@ -179,24 +179,17 @@ trait HasAuthenticationLog
 
   public function untrustDevice(string $deviceId): bool
   {
-    return $this->authentications()?
-    ->fromDevice($deviceId)
-    ->update(['is_trusted' => false]);
+    return $this->authentications()?->fromDevice($deviceId)->update(['is_trusted' => false]);
   }
 
   public function updateDeviceName(string $deviceId, string $name): bool
   {
-    return $this->authentications()?
-    ->fromDevice($deviceId)
-    ->update(['device_name' => $name]);
+    return $this->authentications()?->fromDevice($deviceId)->update(['device_name' => $name]);
   }
 
   public function isDeviceTrusted(string $deviceId): bool
   {
-    return $this->authentications()?
-    ->fromDevice($deviceId)
-    ->trusted()
-    ->exists();
+    return $this->authentications()?->fromDevice($deviceId)->trusted()->exists();
   }
 
   // Suspicious Activity Detection
@@ -205,10 +198,7 @@ trait HasAuthenticationLog
     $suspicious = [];
 
     // Check for multiple failed logins (in the last hour)
-    $recentFailed = $this->authentications()?
-    ->failed()
-    ->where('login_at', '>=', now()->subHour())
-    ->count();
+    $recentFailed = $this->authentications()?->failed()->where('login_at', '>=', now()->subHour())->count();
 
     if ($recentFailed >= config('authentication-log.suspicious.failed_login_threshold', 5)) {
       $suspicious[] = [
@@ -219,11 +209,7 @@ trait HasAuthenticationLog
     }
 
     // Check for rapid location changes (in the last hour)
-    $recentLogins = $this->authentications()?
-    ->successful()
-    ->where('login_at', '>=', now()->subHour())
-    ->whereNotNull('location')
-    ->get();
+    $recentLogins = $this->authentications()?->successful()->where('login_at', '>=', now()->subHour())->whereNotNull('location')->get();
 
     if ($recentLogins->count() >= 2) {
       $countries = $recentLogins->pluck('location.country')->filter()->unique();
