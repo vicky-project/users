@@ -88,24 +88,24 @@ trait HasAuthenticationLog
     return $this->authentications() ? $this->authentications()->successful()->distinct()->count('device_id') : 0;
   }
 
-  public function getSuspiciousActivitiesCount(): ?int
+  public function getSuspiciousActivitiesCount(): int
   {
-    return $this->authentications()?->suspicious()->count();
+    return $this->authentications() ? $this->authentications()->suspicious()->count() : 0;
   }
 
   // Session Management Methods
   public function activeSessions() {
-    return $this->authentications() ? $this->authentications()->active()->latest('login_at') : collect();
+    return $this->authentications() ? $this->authentications()->active()->latest('login_at') : null;
   }
 
   public function getActiveSessions(): \Illuminate\Database\Eloquent\Collection
   {
-    return $this->activeSessions()->get();
+    return $this->activeSessions() ? $this->activeSessions()->get() : collect();
   }
 
   public function getActiveSessionsCount(): int
   {
-    return $this->activeSessions()->count();
+    return $this->activeSessions() ? $this->activeSessions()->count() : 0;
   }
 
   public function revokeSession(int $sessionId): bool
