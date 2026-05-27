@@ -1,10 +1,9 @@
 <?php
 namespace Modules\Users\Http\Controllers\Users;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\Users\Models\User;
-use Rappasoft\LaravelAuthenticationLog\Helpers\DeviceFingerprint;
 
 class AuthLogController extends Controller {
   /**
@@ -85,7 +84,10 @@ class AuthLogController extends Controller {
   public function revokeOtherSessions(Request $request) {
     try {
       $user = $request->user();
-      $currentDeviceId = DeviceFingerprint::generate($request);
+      if (!class_exists(\Rappasoft\LaravelAuthenticationLog\Helpers\DeviceFingerprint::class)) {
+        return response()->json(['success' => false, 'message' => 'Package not installed.']);
+      }
+      $currentDeviceId = \Rappasoft\LaravelAuthenticationLog\Helpers\DeviceFingerprint::generate($request);
 
       $user->revokeAllOtherSessions($currentDeviceId);
 
