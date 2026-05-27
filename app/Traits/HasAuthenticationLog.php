@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 trait HasAuthenticationLog
 {
-  public function authentications(): MorphMany
+  public function authentications(): ?MorphMany
   {
     if (class_exists(\Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog::class)) {
       return $this->morphMany(Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog::class, 'authenticatable')->latest('login_at');
@@ -15,7 +15,7 @@ trait HasAuthenticationLog
     return null;
   }
 
-  public function latestAuthentication(): MorphOne
+  public function latestAuthentication(): ?MorphOne
   {
     if (class_exists(\Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog::class)) {
       return $this->morphOne(\Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog::class, 'authenticatable')->latestOfMany('login_at');
@@ -73,22 +73,22 @@ trait HasAuthenticationLog
     ];
   }
 
-  public function getTotalLogins(): int
+  public function getTotalLogins(): ?int
   {
     return $this->authentications()?->successful()->count();
   }
 
-  public function getFailedAttempts(): int
+  public function getFailedAttempts(): ?int
   {
     return $this->authentications()?->failed()->count();
   }
 
-  public function getUniqueDevicesCount(): int
+  public function getUniqueDevicesCount(): ?int
   {
     return $this->authentications()?->successful()->distinct()->count('device_id');
   }
 
-  public function getSuspiciousActivitiesCount(): int
+  public function getSuspiciousActivitiesCount(): ?int
   {
     return $this->authentications()?->suspicious()->count();
   }
