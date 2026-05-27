@@ -19,7 +19,7 @@ class UsersController extends Controller
   * Show the form for creating a new resource.
   */
   public function profile(Request $request) {
-    $device = null;
+    $device = '';
     if (class_exists(\Rappasoft\LaravelAuthenticationLog\Helpers\DeviceFingerprint::class)) {
       $device = \Rappasoft\LaravelAuthenticationLog\Helpers\DeviceFingerprint::generate($request);
     }
