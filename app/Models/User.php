@@ -6,11 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravolt\Avatar\Avatar;
 use Laravel\Sanctum\HasApiTokens;
-use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\CausesActivity;
+use Modules\Users\Traits\HasAuthenticationLog;
 
 class User extends Authenticatable
 {
@@ -18,7 +18,7 @@ class User extends Authenticatable
   Notifiable,
   HasRoles,
   SoftDeletes,
-  AuthenticationLoggable,
+  HasAuthenticationLog,
   CausesActivity,
   LogsActivity;
 
