@@ -73,19 +73,19 @@ trait HasAuthenticationLog
     ];
   }
 
-  public function getTotalLogins(): ?int
+  public function getTotalLogins(): int
   {
-    return $this->authentications()?->successful()->count();
+    return $this->authentications() ? $this->authentications()->successful()->count() : 0;
   }
 
-  public function getFailedAttempts(): ?int
+  public function getFailedAttempts(): int
   {
-    return $this->authentications()?->failed()->count();
+    return $this->authentications() ? $this->authentications()->failed()->count() : 0;
   }
 
-  public function getUniqueDevicesCount(): ?int
+  public function getUniqueDevicesCount(): int
   {
-    return $this->authentications()?->successful()->distinct()->count('device_id');
+    return $this->authentications() ? $this->authentications()->successful()->distinct()->count('device_id') : 0;
   }
 
   public function getSuspiciousActivitiesCount(): ?int
@@ -95,7 +95,7 @@ trait HasAuthenticationLog
 
   // Session Management Methods
   public function activeSessions() {
-    return $this->authentications()?->active()->latest('login_at');
+    return $this->authentications() ? $this->authentications()->active()->latest('login_at') : collect();
   }
 
   public function getActiveSessions(): \Illuminate\Database\Eloquent\Collection
@@ -124,7 +124,10 @@ trait HasAuthenticationLog
 
   public function revokeAllOtherSessions(?string $currentDeviceId = null): int
   {
-    $query = $this->authentications()?->active();
+    if (!$this->authentications()) {
+      return 0;
+    }
+    $query = $this->authentications()->active();
 
     if ($currentDeviceId) {
       $query->where('device_id', '!=', $currentDeviceId);
@@ -138,10 +141,10 @@ trait HasAuthenticationLog
 
   public function revokeAllSessions(): int
   {
-    return $this->authentications()?->active()->update([
+    return $this->authentications() ? $this->authentications()->active()->update([
       'logout_at' => now(),
       'cleared_by_user' => true,
-    ]);
+    ]) : 0;
   }
 
   // Device Management Methods
@@ -172,22 +175,22 @@ trait HasAuthenticationLog
 
   public function trustDevice(string $deviceId): bool
   {
-    return $this->authentications()?->fromDevice($deviceId)->update(['is_trusted' => true]);
+    return $this->authentications() ? $this->authentications()->fromDevice($deviceId)->update(['is_trusted' => true]) : false;
   }
 
   public function untrustDevice(string $deviceId): bool
   {
-    return $this->authentications()?->fromDevice($deviceId)->update(['is_trusted' => false]);
+    return $this->authentications() ? $this->authentications()->fromDevice($deviceId)->update(['is_trusted' => false]) : false;
   }
 
   public function updateDeviceName(string $deviceId, string $name): bool
   {
-    return $this->authentications()?->fromDevice($deviceId)->update(['device_name' => $name]);
+    return $this->authentications() ? $this->authentications()->fromDevice($deviceId)->update(['device_name' => $name]) : false;
   }
 
   public function isDeviceTrusted(string $deviceId): bool
   {
-    return $this->authentications()?->fromDevice($deviceId)->trusted()->exists();
+    return $this->authentications() ? $this->authentications()->fromDevice($deviceId)->trusted()->exists() : false;
   }
 
   // Suspicious Activity Detection
