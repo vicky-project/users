@@ -160,7 +160,7 @@
               </div>
             </div>
 
-            @if(count($activeSessions) > 0)
+            @if($activeSessions && count($activeSessions) > 0)
             <div class="table-responsive">
               <table class="table table-hover" style="color: var(--tg-theme-text-color);">
                 <thead>
@@ -256,7 +256,7 @@
               <i class="bi bi-phone me-2" style="color: var(--tg-theme-button-color):"></i>Perangkat Terhubung ({{ count($devices) }})
             </h6>
 
-            @if($devices->count() > 0)
+            @if($devices && $devices->count() > 0)
             <div class="row">
               @foreach($devices as $device)
               <div class="col-md-6 mb-3">
