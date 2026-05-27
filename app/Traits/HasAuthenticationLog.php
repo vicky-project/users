@@ -199,7 +199,7 @@ trait HasAuthenticationLog
     $suspicious = [];
 
     // Check for multiple failed logins (in the last hour)
-    $recentFailed = $this->authentications()?->failed()->where('login_at', '>=', now()->subHour())->count();
+    $recentFailed = $this->authentications() ? $this->authentications()->failed()->where('login_at', '>=', now()->subHour())->count() : 0;
 
     if ($recentFailed >= config('authentication-log.suspicious.failed_login_threshold', 5)) {
       $suspicious[] = [
@@ -210,7 +210,7 @@ trait HasAuthenticationLog
     }
 
     // Check for rapid location changes (in the last hour)
-    $recentLogins = $this->authentications()?->successful()->where('login_at', '>=', now()->subHour())->whereNotNull('location')->get();
+    $recentLogins = $this->authentications() ? $this->authentications()->successful()->where('login_at', '>=', now()->subHour())->whereNotNull('location')->get() : collect();
 
     if ($recentLogins->count() >= 2) {
       $countries = $recentLogins->pluck('location.country')->filter()->unique();
