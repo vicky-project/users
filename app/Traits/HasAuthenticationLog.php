@@ -148,10 +148,10 @@ trait HasAuthenticationLog
   }
 
   // Device Management Methods
-  public function getDevices(): \Illuminate\Database\Eloquent\Collection
+  public function getDevices(): ?\Illuminate\Database\Eloquent\Collection
   {
     if (!class_exists(\Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog::class)) {
-      return collect();
+      return null;
     }
     // Get distinct devices by selecting the most recent entry for each device_id
     $table = (new \Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog())->getTable();
