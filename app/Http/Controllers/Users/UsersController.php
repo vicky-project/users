@@ -2,10 +2,9 @@
 
 namespace Modules\Users\Http\Controllers\Users;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Facades\Hash;
-use Rappasoft\LaravelAuthenticationLog\Helpers\DeviceFingerprint;
 
 class UsersController extends Controller
 {
@@ -20,7 +19,10 @@ class UsersController extends Controller
   * Show the form for creating a new resource.
   */
   public function profile(Request $request) {
-    $device = DeviceFingerprint::generate($request);
+    $device = null;
+    if (class_exists(\Rappasoft\LaravelAuthenticationLog\Helpers\DeviceFingerprint::class)) {
+      $device = \Rappasoft\LaravelAuthenticationLog\Helpers\DeviceFingerprint::generate($request);
+    }
     $user = $request->user();
     $cacheKey = "device_user_" . $user->id . "_trusted_" . md5($device);
     $isTrusted = cache()->remember(
