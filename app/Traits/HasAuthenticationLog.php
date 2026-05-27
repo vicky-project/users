@@ -172,9 +172,7 @@ trait HasAuthenticationLog
 
   public function trustDevice(string $deviceId): bool
   {
-    return $this->authentications()?
-    ->fromDevice($deviceId)
-    ->update(['is_trusted' => true]);
+    return $this->authentications()?->fromDevice($deviceId)->update(['is_trusted' => true]);
   }
 
   public function untrustDevice(string $deviceId): bool
