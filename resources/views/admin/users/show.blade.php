@@ -63,7 +63,7 @@
         </h5>
       </div>
       <div class="card-body">
-        @if($user->authentications->count())
+        @if($user->authentications?->count())
         <div class="table-responsive">
           <table class="table table-hover align-middle">
             <thead class="table-light">
