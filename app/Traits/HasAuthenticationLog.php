@@ -98,9 +98,9 @@ trait HasAuthenticationLog
     return $this->authentications() ? $this->authentications()->active()->latest('login_at') : null;
   }
 
-  public function getActiveSessions(): \Illuminate\Database\Eloquent\Collection
+  public function getActiveSessions(): ?\Illuminate\Database\Eloquent\Collection
   {
-    return $this->activeSessions() ? $this->activeSessions()->get() : collect();
+    return $this->activeSessions() ? $this->activeSessions()->get() : null;
   }
 
   public function getActiveSessionsCount(): int
