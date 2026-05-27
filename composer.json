@@ -16,9 +16,11 @@
     "spatie/laravel-permission": "^6.24",
     "laravolt/avatar": "^6.4",
     "torann/geoip":"^3.0",
-    "rappasoft/laravel-authentication-log": "^6.0",
     "spatie/laravel-activitylog": "^4.10",
     "vicky-project/coreui-module": "^1.0"
+  },
+  "require-dev": {
+    "rappasoft/laravel-authentication-log": "^6.0"
   },
   "extra": {
     "laravel": {
