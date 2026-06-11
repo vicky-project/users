@@ -41,6 +41,7 @@
                 <a href="{{ route('admin.users.show', $user) }}" class="btn btn-sm btn-secondary" title="Show">
                   <i class="bi bi-eye"></i>
                 </a>
+                @if(auth()->id !== $user->id)
                 <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-warning" title="Edit">
                   <i class="bi bi-pencil"></i>
                 </a>
@@ -53,6 +54,7 @@
                     <i class="bi bi-trash"></i>
                   </button>
                 </form>
+                @endif
               </div>
             </td>
           </tr>

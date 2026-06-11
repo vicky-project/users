@@ -46,6 +46,9 @@ class UserController extends Controller
   }
 
   public function edit(User $user) {
+    if (auth()->id() === $user->id) {
+      abort(403, 'Anda tidak dapat mengedit akun sendiri.');
+    }
     $roles = Role::all();
     $userRoles = $user->roles->pluck("id")->toArray();
     return view(
@@ -55,6 +58,9 @@ class UserController extends Controller
   }
 
   public function update(Request $request, User $user) {
+    if (auth()->id() === $user->id) {
+      abort(403, 'Anda tidak dapat mengubah data akun sendiri.');
+    }
     $data = $request->validate([
       "name" => "required|string|max:255",
       "email" => "required|email|unique:users,email," . $user->id,
@@ -78,6 +84,9 @@ class UserController extends Controller
   }
 
   public function destroy(User $user) {
+    if (auth()->id() === $user->id) {
+      abort(403, 'Anda tidak dapat menghapus akun sendiri.');
+    }
     $user->delete();
     return redirect()
     ->route("admin.users.index")
@@ -85,6 +94,9 @@ class UserController extends Controller
   }
 
   public function assignRoles(Request $request, User $user) {
+    if (auth()->id() === $user->id) {
+      abort(403, 'Anda tidak dapat mengubah roles akun sendiri.');
+    }
     $roles = Role::all();
     $userRoles = $user->roles->pluck("id")->toArray();
     return view(
@@ -94,6 +106,9 @@ class UserController extends Controller
   }
 
   public function updateRoles(Request $request, User $user) {
+    if (auth()->id() === $user->id) {
+      abort(403, 'Anda tidak dapat mengubah roles akun sendiri.');
+    }
     $request->validate(["roles" => "array"]);
     $user->syncRoles($request->roles ?? []);
     return redirect()
