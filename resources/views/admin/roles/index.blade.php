@@ -19,6 +19,7 @@
       {{ session('error') }}
     </div>
     @endif
+
     <div class="table-responsive">
       <table class="table table-bordered table-striped table-hover">
         <thead>
@@ -34,10 +35,15 @@
           <tr>
             <td>{{ $role->id }}</td>
             <td>{{ $role->name }}</td>
-            <td>
-              @foreach($role->permissions as $permission)
-              <span class="badge bg-info">{{ $permission->name }}</span>
-              @endforeach
+            <td class="permission-cell">
+              <div class="permission-badges d-flex flex-wrap gap-1">
+                @foreach($role->permissions as $permission)
+                <span class="badge bg-info permission-badge-item"
+                  data-full="{{ $permission->name }}">
+                  {{ $permission->name }}
+                </span>
+                @endforeach
+              </div>
             </td>
             <td>
               <div class="btn-group btn-group-sm">
@@ -60,9 +66,71 @@
         </tbody>
       </table>
     </div>
+
     <div class="d-flex justify-content-center">
       {{ $roles->links() }}
     </div>
   </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+  function updatePermissionBadges() {
+    document.querySelectorAll('.permission-badges').forEach(container => {
+    // Kembalikan semua badge ke tampilan semula
+    container.querySelectorAll('.permission-badge-item').forEach(b => {
+    b.style.display = '';
+    });
+
+    // Hapus badge "more" sebelumnya
+    const oldMore = container.querySelector('.more-badge');
+    if (oldMore) oldMore.remove();
+
+    const badges = Array.from(container.querySelectorAll('.permission-badge-item'));
+    if (badges.length === 0) return;
+
+    // Lebar container yang tersedia
+    const maxWidth = container.offsetWidth;
+    let usedWidth = 0;
+    let visibleCount = 0;
+
+    // Hitung berapa banyak badge yang bisa muat
+    for (let i = 0; i < badges.length; i++) {
+    const badgeWidth = badges[i].offsetWidth + 4; // 4px gap
+    // Sisakan ruang untuk badge "+X more" jika bukan yang terakhir
+    const reserve = (i < badges.length - 1) ? 60 : 0;
+    if (usedWidth + badgeWidth + reserve > maxWidth) break;
+    usedWidth += badgeWidth;
+    visibleCount++;
+    }
+
+    // Sembunyikan badge yang tidak muat
+    for (let i = visibleCount; i < badges.length; i++) {
+    badges[i].style.display = 'none';
+    }
+
+    // Tambahkan badge "+X more" jika ada yang disembunyikan
+    if (visibleCount < badges.length) {
+    const hiddenCount = badges.length - visibleCount;
+    const allNames = badges.map(b => b.dataset.full).join(', ');
+    const more = document.createElement('span');
+    more.className = 'badge bg-secondary more-badge ms-1';
+    more.textContent = `+${hiddenCount} more`;
+    more.setAttribute('data-bs-toggle', 'popover');
+    more.setAttribute('title', 'All Permissions');
+    more.setAttribute('data-bs-content', allNames);
+    more.setAttribute('tabindex', '0');
+    container.appendChild(more);
+    // Aktifkan popover
+    new bootstrap.Popover(more, { trigger: 'hover focus', html: false });
+    }
+    });
+  }
+
+  // Jalankan saat halaman dimuat
+  window.addEventListener('load', updatePermissionBadges);
+  // Jalankan ulang saat ukuran layar berubah
+  window.addEventListener('resize', updatePermissionBadges);
+</script>
+@endpush
