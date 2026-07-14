@@ -91,10 +91,19 @@ class User extends Authenticatable
       }
     }
 
-    $colorPairs = config("users.avatar.themes");
+    $colorPairs = config("users.avatar.themes", []);
 
-    $hash = md5(strtolower(trim($this->email)));
-    return (new Avatar(["themes" => $colorPairs]))->create($this->name)->setTheme(array_keys($colorPairs))->toBase64() ?? "https://www.gravatar.com/avatar/{$hash}?s=200&d=mp";
+    $avatar = Avatar::create($this->name);
+    if (!empty($colorPairs) && is_array($colorPairs)) {
+      $avatar->setTheme(array_keys($colorPairs));
+    }
+
+    try {
+      return $avatar->toBase64();
+    } catch(\Exception $e) {
+      $hash = md5(strtolower(trim($this->email)));
+      return "https://www.gravatar.com/avatar/{$hash}?s=200&d=mp";
+    }
   }
 
   public function notifyAuthenticationLogVia() {
