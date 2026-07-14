@@ -93,7 +93,8 @@ class User extends Authenticatable
 
     $colorPairs = config("users.avatar.themes", []);
 
-    $avatar = Avatar::create($this->name);
+    $avatar = new Avatar();
+    $avatar->create($this->name);
     if (!empty($colorPairs) && is_array($colorPairs)) {
       $avatar->setTheme(array_keys($colorPairs));
     }
